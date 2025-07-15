@@ -5,19 +5,17 @@ const editBtn = document.querySelector('.js-edit');
 
 function createGrid(num) {
   gridWrapper.innerHTML = ''
+  const width = gridWrapper.clientWidth;
   for (let i = 0; i < (num * num); i++) {
     let gridSquare = document.createElement('div');
     gridSquare.className = 'grid-square';
 
-    let squareSize = (720 / (num)) - 2
-    console.log(squareSize)
-
-    gridSquare.style.width = `${squareSize}px`
-    gridSquare.style.height = `${squareSize}px`
+    let squareSize = width / num;
+    gridSquare.style.width = `${squareSize}px`;
+    gridSquare.style.height = `${squareSize}px`;
     gridWrapper.appendChild(gridSquare);
 
     hoverEffect(gridSquare);
-    clearGrid(gridSquare);
   }
 }
 
@@ -25,12 +23,6 @@ function hoverEffect(square) {
   square.addEventListener('mouseenter', () => {
     const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
     square.style.backgroundColor = randomColor;
-  })
-}
-
-function clearGrid(square) {
-  clearBtn.addEventListener('click', () => {
-    square.style.removeProperty('background-color')
   })
 }
 
@@ -49,6 +41,12 @@ function editGrid() {
     console.log(createGrid(newNum));
   })
 }
+
+clearBtn.addEventListener('click', () => {
+  document.querySelectorAll('.grid-square').forEach(square => {
+    square.style.removeProperty('background-color');
+  });
+});
 
 createGrid(16);
 editGrid();
